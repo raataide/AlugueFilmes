@@ -273,13 +273,30 @@ $(document)
     .on('click', '.btn-pesq', function () {
         var tipo_filtro = $('#ddl_tipo').val(),
             filtro = $('#txt_filtro_cli').val(),
-            param = {'tipo' : tipo_filtro, 'filtro': filtro},
+            param = { 'tipo': tipo_filtro, 'filtro': filtro },
             url = urlRecuperarCliente;
         $.post(url, add_anti_forgery_token(param), function (response) {
             if (response) {
                 preenche_dados_cli(response[0]);
             }
         })
+
+    })
+    .on('click', '.btn-add-filme', function () {
+        var btn = $(this),
+            filme = $('#lista_filmes'),
+            tbody_filmes = $('#grid_filmes > tbody');
+
+        filme.find('input[type=checkbox]').each(function (index, input) {
+            var cbx = $(input),
+                marcado = cbx.is(':checked');
+            if (marcado) {
+                tbody_filmes.append("<tr><td>"+cbx.attr('data-id-filme')+"</td><td>"+cbx.attr('text')+"</td></tr>");
+                //alert(cbx.attr('data-id-filme'));
+                //ids.push(parseInt(cbx.attr('data-id-filme')));
+            }
+        });
+
         
     });
 
