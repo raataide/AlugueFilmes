@@ -1,0 +1,85 @@
+﻿@model List<AlugaFilme.Web.Models.GeneroModel>
+@{
+    Layout = "~/Views/Shared/_Cadastro.cshtml";
+    ViewBag.Title = "Generos";
+    ViewBag.Lista = Model;
+}
+
+@section Styles{
+    <link href="~/Content/bootstrap-select.css" rel="stylesheet" />
+    <link href="~/Content/Cadastro/Genero.css" rel="stylesheet" />
+}
+
+@section TituloGrid{
+    <th></th>
+    <th><span class="coluna-ordenacao" data-campo="nome">Nome</span></th>
+    <th>Ativo</th>
+    <th>Ação</th>
+}
+
+@section LinhaGrid{
+    @{
+        var linha = 0;
+        foreach (var item in Model)
+        {
+            linha++;
+            if (linha <= ViewBag.QtdMax)
+            {
+                var ativo = (item.Ativo ? "SIM" : "NÃO");
+                <tr data-id="@item.Id">
+                    <td style="text-align:center;vertical-align:middle" >
+                        <input type="checkbox" data-id="@item.Id">
+                    </td>
+                    <td>@item.Nome</td>
+                    <td>@ativo</td>
+                    <td>
+                        <a class="btn btn-primary btn-alterar" role="button"><i class="glyphicon glyphicon-pencil"></i> Alterar</a>
+                        <a class="btn btn-danger btn-excluir" role="button"><i class="glyphicon glyphicon-trash"></i> Excluir</a>
+                    </td>
+                </tr>
+            }
+            else
+            {
+                linha = 0;
+                break;
+
+            }
+        }
+    }
+}
+
+@section CamposCadastro{
+    <div class="row">
+        <div class="col-md-12">
+            @Html.Label("txt_nome", "Nome", new { @class = "control-label" })
+            @Html.TextBox("txt_nome", null, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-check">
+                @Html.CheckBox("cbx_ativo", new { @class = "form-check-input" })
+                @Html.Label("cbx_ativo", "Ativo", new { @class = "form-check-label" })
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts{
+    <script src="~/Scripts/bootstrap-select.js"></script>
+    <script>
+        var tituloPagina = '@ViewBag.Title';
+
+        var urlAlteracao = '@Url.Action("RecuperarGenero", "CadGenero")';
+        var urlExclusao = '@Url.Action("ExcluirGenero", "CadGenero")';
+        var urlExclusaoVarios = '@Url.Action("ExcluirVariosGeneros", "CadGenero")';
+        var urlConfirmacao = '@Url.Action("SalvarGenero", "CadGenero")';
+
+        var urlPaginaNumero = '@Url.Action("GeneroPagina", "CadGenero")';
+        var urlChangePage = '@Url.Action("GeneroPagina", "CadGenero")';
+        var urlFiltro = '@Url.Action("GeneroPagina", "CadGenero")';
+        var urlOrdenacao = '@Url.Action("GeneroPagina", "CadGenero")';
+
+    </script>
+    <script src="~/Scripts/Cadastro/Genero.js"></script>
+}

@@ -1,0 +1,87 @@
+﻿@model List<AlugaFilme.Web.Models.Domain.LoginModel>
+@{
+    Layout = "~/Views/Shared/_Cadastro.cshtml";
+    ViewBag.Title = "Usuário";
+    ViewBag.Lista = Model;
+}
+
+@section Styles{
+    <link href="~/Content/bootstrap-select.css" rel="stylesheet" />
+    <link href="~/Content/Cadastro/Usuario.css" rel="stylesheet" />
+}
+
+@section TituloGrid{
+    <th></th>
+    <th><span class="coluna-ordenacao" data-campo="nome">Nome</span></th>
+    <th><span class="coluna-ordenacao" data-campo="login">Login</span></th>
+    <th>Ação</th>
+}
+
+@section LinhaGrid{
+    @{
+        var linha = 0;
+        foreach (var item in Model)
+        {
+            linha++;
+            if (linha <= ViewBag.QtdMax)
+            {
+                <tr data-id="@item.Id">
+                    <td style="text-align:center;vertical-align:middle">
+                        <input type="checkbox" data-id="@item.Id">
+                    </td>
+                    <td>@item.Nome</td>
+                    <td>@item.Login</td>
+                    <td>
+                        <a class="btn btn-primary btn-alterar" role="button"><i class="glyphicon glyphicon-pencil"></i> Alterar</a>
+                        <a class="btn btn-danger btn-excluir" role="button"><i class="glyphicon glyphicon-trash"></i> Excluir</a>                        
+                    </td>
+                </tr>
+            }
+            else
+            {
+                linha = 0;
+                break;
+
+            }
+        }
+    }
+}
+
+@section CamposCadastro{
+    <div class="row">
+        <div class="col-md-12">
+            @Html.Label("txt_nome", "Nome", new { @class = "control-label" })
+            @Html.TextBox("txt_nome", null, new { @class = "form-control" })
+        </div>
+        <div class="col-md-12" style="margin-top:5px">
+            @Html.Label("txt_email", "Email", new { @class = "control-label" })
+            @Html.TextBox("txt_email", null, new { @class = "form-control" })
+        </div>
+        <div class="col-md-12" style="margin-top:5px">
+            @Html.Label("txt_login", "Login", new { @class = "control-label" })
+            @Html.TextBox("txt_login", null, new { @class = "form-control" })
+        </div>
+        <div class="col-md-12" style="margin-top:5px">
+            @Html.Label("txt_senha", "Senha", new { @class = "control-label" })
+            @Html.TextBox("txt_senha", new { ViewBag.SenhaPadrao }, new { @class = "form-control", Type = "password", autocomplete = "new-password" })
+        </div>
+    </div>
+}
+
+@section Scripts{
+    <script src="~/Scripts/bootstrap-select.js"></script>
+    <script>
+        var tituloPagina = '@ViewBag.Title';
+        var urlAlteracao = '@Url.Action("RecuperarUsuario", "CadUsuario")';
+        var urlExclusao = '@Url.Action("ExcluirUsuario", "CadUsuario")';
+        var urlExclusaoVarios = '@Url.Action("ExcluirVariosUsuarios", "CadUsuario")';
+        var urlConfirmacao = '@Url.Action("SalvarUsuario", "CadUsuario")';
+
+        var urlChangePage = '@Url.Action("UsuarioPagina", "CadUsuario")';
+        var urlFiltro = '@Url.Action("UsuarioPagina", "CadUsuario")';
+        var urlPaginaNumero = '@Url.Action("UsuarioPagina", "CadUsuario")';
+        var urlOrdenacao = '@Url.Action("UsuarioPagina", "CadUsuario")';
+    </script>
+    <script src="~/Scripts/Cadastro/Usuario.js"></script>
+}
+

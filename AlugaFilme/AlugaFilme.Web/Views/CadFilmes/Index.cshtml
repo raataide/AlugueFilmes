@@ -1,0 +1,101 @@
+﻿@model List<AlugaFilme.Web.Models.FilmesModel>
+@{
+    Layout = "~/Views/Shared/_Cadastro.cshtml";
+    ViewBag.Title = "Filmes";
+    ViewBag.Lista = Model;
+}
+
+@section Styles{
+    <link href="~/Content/bootstrap-select.css" rel="stylesheet" />
+    <link href="~/Content/Cadastro/Filmes.css" rel="stylesheet" />
+}
+
+@section TituloGrid{
+    <th></th>
+    <th><span class="coluna-ordenacao" data-campo="nome">Nome</span></th>
+    <th><span class="coluna-ordenacao" data-campo="dtcriacao">Data</span></th>
+    <th>Ativo</th>
+    <th>Ação</th>
+}
+
+@section LinhaGrid{
+    @{
+        var linha = 0;
+        foreach (var item in Model)
+        {
+            linha++;
+            if (linha <= ViewBag.QtdMax)
+            {
+                var ativo = (item.Ativo ? "SIM" : "NÃO");
+                <tr data-id="@item.Id">
+                    <td style="text-align:center;vertical-align:middle">
+                        <input type="checkbox" data-id="@item.Id">
+                    </td>
+                    <td>@item.Nome</td>
+                    <td>@item.DtCriacao</td>
+                    <td>@ativo</td>
+                    <td>
+                        <a class="btn btn-primary btn-alterar" role="button"><i class="glyphicon glyphicon-pencil"></i> Alterar</a>
+                        <a class="btn btn-danger btn-excluir" role="button"><i class="glyphicon glyphicon-trash"></i> Excluir</a>
+                    </td>
+                </tr>
+            }
+            else
+            {
+                linha = 0;
+                break;
+
+            }
+        }
+    }
+}
+
+@section CamposCadastro{
+    <div class="row">
+        <div class="col-md-12">
+            @Html.Label("txt_nome", "Nome", new { @class = "control-label" })
+            @Html.TextBox("txt_nome", null, new { @class = "form-control" })
+        </div>
+        <div class="col-md-12" style="margin-top:5px">
+            @Html.CheckBox("cbx_ativo")
+            @Html.Label("cbx_ativo", "Ativo", new { @class = "control-label" })
+        </div>
+        <div class="form-group" style="margin:0 10px 0 10px">
+            <div class="col-md-12">
+                <h4 class="text-center">Gêneros</h4>
+                <div class="well" style="max-height:300px; padding: 5px; margin:0; overflow:auto">
+                    <ul id="lista_genero" class="list-group checked-list-box" style="margin:0">
+                        @foreach (var genero in (List<AlugaFilme.Web.Models.GeneroModel>)ViewBag.ListaGeneros)
+                        {
+                            <li class="list-group-item">
+                                <label style="margin-bottom:0">
+                                    <input type="checkbox" data-id-genero="@genero.Id" /> @genero.Nome
+                                </label>
+
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts{
+    <script src="~/Scripts/bootstrap-select.js"></script>
+    <script>
+        var tituloPagina = '@ViewBag.Title';
+
+        var urlAlteracao = '@Url.Action("RecuperarFilmes", "CadFilmes")';
+        var urlExclusao = '@Url.Action("ExcluirFilmes", "CadFilmes")';
+        var urlExclusaoVarios = '@Url.Action("ExcluirVariosFilmes", "CadFilmes")';
+        var urlConfirmacao = '@Url.Action("SalvarFilmes", "CadFilmes")';
+
+
+        var urlPaginaNumero = '@Url.Action("FilmesPagina", "CadFilmes")';
+        var urlChangePage = '@Url.Action("FilmesPagina", "CadFilmes")';
+        var urlFiltro = '@Url.Action("FilmesPagina", "CadFilmes")';
+        var urlOrdenacao = '@Url.Action("FilmesPagina", "CadFilmes")';
+    </script>
+    <script src="~/Scripts/Cadastro/Filmes.js"></script>
+}

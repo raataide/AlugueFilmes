@@ -1,0 +1,164 @@
+﻿@model List<AlugaFilme.Web.Models.LocacaoModel>
+@{
+    Layout = "~/Views/Shared/_Cadastro.cshtml";
+    ViewBag.Title = "Locação";
+    ViewBag.Lista = Model;
+}
+
+@section Styles{
+    <link href="~/Content/bootstrap-select.css" rel="stylesheet" />
+    <link href="~/Content/Operacoes/Locacao.css" rel="stylesheet" />
+    <style>
+        .dialogo > .modal-dialog {
+            width: 700px !important;
+        }
+
+        .modal-body {
+            height: 550px;
+            overflow-y: scroll;
+        }
+    </style>
+}
+
+@section TituloGrid{
+    <th><span class="coluna-ordenacao" data-campo="nome">Cliente</span></th>
+    <th><span class="coluna-ordenacao" data-campo="login">Data Locação</span></th>
+    <th><span class="coluna-ordenacao" data-campo="login">Qtd. Filmes</span></th>
+    <th><span class="coluna-ordenacao" data-campo="login">Devolvido</span></th>
+    <th>Ação</th>
+}
+
+@section LinhaGrid{
+    @{
+        var linha = 0;
+        foreach (var item in Model)
+        {
+            linha++;
+            if (linha <= ViewBag.QtdMax)
+            {
+                <tr data-id="@item.Id">
+                    <td>@item.Cpf_Cliente</td>
+                    <td>@item.DtLocacao</td>
+                    <td>@item.Filmes.Count()</td>
+                    <td>Sim</td>
+                    <td>
+                        <a class="btn btn-primary btn-alterar" role="button"><i class="glyphicon glyphicon-pencil"></i> Alterar</a>
+                        <a class="btn btn-danger btn-excluir" role="button"><i class="glyphicon glyphicon-trash"></i> Excluir</a>
+                    </td>
+                </tr>
+            }
+            else
+            {
+                linha = 0;
+                break;
+
+            }
+        }
+    }
+}
+
+@section CamposCadastro{
+    <div class="row" style="margin-top: 10px">
+        <div class="col-md-12">
+            <div class="panel panel-info">
+                <div class="panel-heading">Cliente</div>
+                <div class="panel-body">
+                    <div class="row form-group">
+                        <div class="col-md-3">
+                            @Html.Label("ddl_tipo", "Tipo", new { @class = "control-label" })
+                            @Html.DropDownList("ddl_tipo", (SelectList)ViewBag.Filtro, new { @class = "selectpicker form-control" })
+                        </div>
+                        <div class="col-md-7">
+                            @Html.Label("txt_filtro_cli", "Filtro", new { @class = "control-label" })
+                            @Html.TextBox("txt_filtro_cli", null, new { @class = "form-control" })
+                        </div>
+                        <div class="col-md-1">
+                            @Html.Label("btn_pesq", " ", new { @class = "control-label" })
+                            <a class="btn btn-default btn-pesq" role="button"><i class="glyphicon glyphicon-search"></i></a>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top:15px">
+                        <div class="col-md-9">
+                            @Html.Label("txt_cli_nome", "Nome", new { @class = "control-label" })
+                            @Html.TextBox("txt_cli_nome", null, new { @class = "form-control" })
+                        </div>
+                        <div class="col-md-3">
+                            @Html.Label("txt_cpf", "CPF", new { @class = "control-label" })
+                            @Html.TextBox("txt_cpf", null, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-9">
+                            @Html.Label("txt_logradouro", "Rua", new { @class = "control-label" })
+                            @Html.TextBox("txt_logradouro", null, new { @class = "form-control" })
+                        </div>
+                        <div class="col-md-3">
+                            @Html.Label("txt_numero", "N.º", new { @class = "control-label" })
+                            @Html.TextBox("txt_numero", null, new { @class = "form-control" })
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="panel panel-info">
+                <div class="panel-heading">Filmes</div>
+                <div class="panel-body">
+                    <div class="well" style="max-height:300px; padding: 5px; margin:0; overflow:auto">
+                        @Html.Label("txt_nome_filme", "Nome do Filme", new { @class = "control-label" })
+                        @Html.TextBox("txt_nome_filme", null, new { @class = "form-control" })
+                        <ul id="lista_filmes" class="list-group checked-list-box" style="margin-top:5px">
+                            @foreach (var filmes in (List<AlugaFilme.Web.Models.FilmesModel>)ViewBag.Filmes)
+                            {
+                                <li class="list-group-item">
+                                    <label style="margin-bottom:0">
+                                        <input type="checkbox" data-id-filme="@filmes.Id" /> @filmes.Nome
+                                    </label>
+
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                    <a class="btn btn-primary btn-add-filme" style="margin-top:5px" role="button"><i class="glyphicon glyphicon-plus"></i>Adicionar</a>
+                    <table id="grid_filmes" class="table table-bordered table-striped table-hover" style="margin-top:5px">
+                        <thead>
+                            <tr>
+                                <th>Cód. Filme</th>
+                                <th>Nome filme</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>asdasdasd</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts{
+    <script src="~/Scripts/bootstrap-select.js"></script>
+    <script>
+
+        var urlRecuperarCliente = '@Url.Action("RecuperarClientes", "Locacao")';
+
+        var tituloPagina = '@ViewBag.Title';
+        var urlAlteracao = '@Url.Action("RecuperarUsuario", "Locacao")';
+        var urlExclusao = '@Url.Action("ExcluirUsuario", "Locacao")';
+        var urlExclusaoVarios = '@Url.Action("ExcluirVariosUsuarios", "Locacao")';
+        var urlConfirmacao = '@Url.Action("SalvarUsuario", "Locacao")';
+
+        var urlChangePage = '@Url.Action("UsuarioPagina", "Locacao")';
+        var urlFiltro = '@Url.Action("UsuarioPagina", "Locacao")';
+        var urlPaginaNumero = '@Url.Action("UsuarioPagina", "Locacao")';
+        var urlOrdenacao = '@Url.Action("UsuarioPagina", "Locacao")';
+    </script>
+    <script src="~/Scripts/Operacoes/Locacao.js"></script>
+}
+

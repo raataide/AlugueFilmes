@@ -1,0 +1,90 @@
+﻿@model  AlugaFilme.Web.Models.LoginViewModel
+@{
+    ViewBag.Title = "Login";
+}
+
+<div class="container-login">
+    <div class="row">
+        <h3 class="titulo" style="text-align:center">Entrar no Sistema</h3>
+    </div>
+    <div class="row">
+        <section id="loginForm">
+            @using (Html.BeginForm("Login", "Conta", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Usuario, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(m => m.Usuario, new { autofocus = "autofocus", @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.Usuario, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Senha, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-10">
+                        @Html.PasswordFor(m => m.Senha, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.Senha, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-4 col-md-offset-2">
+                        @Html.CheckBoxFor(m => m.LembrarMe)
+                        @Html.LabelFor(m => m.LembrarMe)
+
+                    </div>
+                    <div class="col-md-6" style="text-align:right">
+                        @Html.ActionLink("Esqueci minha senha", "RecSenha", "Conta", null, new { @class = "btn btn-link" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <div class="col-md-offset-2">
+                            <input type="submit" class="btn btn-success" value="Entrar" />
+                            <input type="button" class="btn btn-success" value="Cadastrar Novo" id="Incluir_User" />
+                        </div>
+                    </div>
+                </div>
+            }
+        </section>
+    </div>
+</div>
+<div id="modal_cadastro" class="invisivel" role="dialog">
+    <div class="row">
+        <div class="col-md-12">
+            @Html.Label("txt_nome", "Nome", new { @class = "control-label" })
+            @Html.TextBox("txt_nome", null, new { @class = "form-control" })
+        </div>
+        <div class="col-md-12" style="margin-top:5px">
+            @Html.Label("txt_email", "Email", new { @class = "control-label" })
+            @Html.TextBox("txt_email", null, new { @class = "form-control" })
+        </div>
+        <div class="col-md-12" style="margin-top:5px">
+            @Html.Label("txt_login", "Login", new { @class = "control-label" })
+            @Html.TextBox("txt_login", null, new { @class = "form-control" })
+        </div>
+        <div class="col-md-12" style="margin-top:5px">
+            @Html.Label("txt_senha", "Senha", new { @class = "control-label" })
+            @Html.TextBox("txt_senha", new { ViewBag.SenhaPadrao }, new { @class = "form-control", Type = "password", autocomplete = "new-password" })
+        </div>
+    </div>
+    <div class="row">
+        <div class="=col-md-12">
+            <div class="modal-footer">
+                <a id="btn_sair" class="btn btn-default" role="button" data-dismiss="modal"><i class="glyphicon glyphicon-remove"></i> Sair</a>
+                <a id="btn_salvar" class="btn btn-primary" role="button"><i class="glyphicon glyphicon-ok"></i> Salvar</a>
+            </div>
+            <div id="msg-aviso" class="alert alert-warning invisivel">Falta preencher os campos acima.</div>
+            <div id="msg-erro" class="alert alert-danger invisivel">Ocorreu um erro, contate o administrador do sistema.</div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script>
+        var urlConfirmacao = '@Url.Action("SalvarUsuario", "Conta")';
+    </script>
+    <script src="~/Scripts/Cadastro/NewUser.js"></script>
+}
