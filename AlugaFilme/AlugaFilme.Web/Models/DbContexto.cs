@@ -35,8 +35,8 @@ namespace AlugaFilme.Web.Models
                 .Map(x =>
                 {
                     x.ToTable("locacao_filmes");
-                    x.MapLeftKey("Filmes_Id");
-                    x.MapRightKey("Locacao_Id");
+                    x.MapLeftKey("Locacao_Id");
+                    x.MapRightKey("Filmes_Id");
                 });
             base.OnModelCreating(modelBuilder);
         }

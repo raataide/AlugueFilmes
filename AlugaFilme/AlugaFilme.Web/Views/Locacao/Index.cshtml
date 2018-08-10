@@ -10,21 +10,21 @@
     <link href="~/Content/Operacoes/Locacao.css" rel="stylesheet" />
     <style>
         .dialogo > .modal-dialog {
-            width: 700px !important;
+            width: 800px !important;
         }
 
-        .modal-body {
+        #modal_cadastro {
             height: 550px;
             overflow-y: scroll;
-        }
+        }        
     </style>
 }
 
 @section TituloGrid{
-    <th><span class="coluna-ordenacao" data-campo="nome">Cliente</span></th>
-    <th><span class="coluna-ordenacao" data-campo="login">Data Locação</span></th>
-    <th><span class="coluna-ordenacao" data-campo="login">Qtd. Filmes</span></th>
-    <th><span class="coluna-ordenacao" data-campo="login">Devolvido</span></th>
+    <th>Cliente</th>
+    <th>Data Locação</th>
+    <th>Qtd. Filmes</th>
+    <th>Devolvido</th>
     <th>Ação</th>
 }
 
@@ -36,14 +36,14 @@
             linha++;
             if (linha <= ViewBag.QtdMax)
             {
+                var devolvido = (item.Devolvido ? "SIM" : "NÃO");
                 <tr data-id="@item.Id">
-                    <td>@item.Cpf_Cliente</td>
+                    <td>@ViewBag.Cliente_Nome[linha-1]</td>
                     <td>@item.DtLocacao</td>
                     <td>@item.Filmes.Count()</td>
-                    <td>Sim</td>
+                    <td>@devolvido</td>
                     <td>
-                        <a class="btn btn-primary btn-alterar" role="button"><i class="glyphicon glyphicon-pencil"></i> Alterar</a>
-                        <a class="btn btn-danger btn-excluir" role="button"><i class="glyphicon glyphicon-trash"></i> Excluir</a>
+                        <a class="btn btn-info btn-devolver" role="button"><i class="glyphicon glyphicon-file"></i> Devolver</a>
                     </td>
                 </tr>
             }
@@ -144,16 +144,15 @@
 
         var urlRecuperarCliente = '@Url.Action("RecuperarClientes", "Locacao")';
         var urlConfirmacao = '@Url.Action("SalvaLocacao", "Locacao")';
+        var urlDevolucao = '@Url.Action("DevolverLocacao", "Locacao")';
+        var urlFiltro_Filme = '@Url.Action("RecuperaFilme", "Locacao")';
+        var urlFiltro = '@Url.Action("LocacaoPagina", "Locacao")';
 
-        var tituloPagina = '@ViewBag.Title';
-        var urlAlteracao = '@Url.Action("RecuperarUsuario", "Locacao")';
-        var urlExclusao = '@Url.Action("ExcluirUsuario", "Locacao")';
-        var urlExclusaoVarios = '@Url.Action("ExcluirVariosUsuarios", "Locacao")';
-
-        var urlChangePage = '@Url.Action("UsuarioPagina", "Locacao")';
-        var urlFiltro = '@Url.Action("UsuarioPagina", "Locacao")';
-        var urlPaginaNumero = '@Url.Action("UsuarioPagina", "Locacao")';
-        var urlOrdenacao = '@Url.Action("UsuarioPagina", "Locacao")';
+        var tituloPagina = '@ViewBag.Title';               
+        var urlChangePage = '@Url.Action("LocacaoPagina", "Locacao")';
+        
+        var urlPaginaNumero = '@Url.Action("LocacaoPagina", "Locacao")';
+        var urlOrdenacao = '@Url.Action("LocacaoPagina", "Locacao")';
     </script>
     <script src="~/Scripts/Operacoes/Locacao.js"></script>
 }

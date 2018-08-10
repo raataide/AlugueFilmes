@@ -163,9 +163,9 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\Cripto.cs" />
-    <Compile Include="Migrations\201808092353194_CreateDB.cs" />
-    <Compile Include="Migrations\201808092353194_CreateDB.Designer.cs">
-      <DependentUpon>201808092353194_CreateDB.cs</DependentUpon>
+    <Compile Include="Migrations\201808101505388_CreateDB.cs" />
+    <Compile Include="Migrations\201808101505388_CreateDB.Designer.cs">
+      <DependentUpon>201808101505388_CreateDB.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\DbContexto.cs" />
@@ -261,8 +261,8 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201808092353194_CreateDB.resx">
-      <DependentUpon>201808092353194_CreateDB.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201808101505388_CreateDB.resx">
+      <DependentUpon>201808101505388_CreateDB.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

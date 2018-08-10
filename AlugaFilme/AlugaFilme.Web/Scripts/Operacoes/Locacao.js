@@ -1,14 +1,11 @@
 ﻿function set_dados_form(dados) {
+    $('#id_cadastro').val(dados.Id);
     $('#id_cliente').val(dados.Id_Cliente);
-    /*$('#txt_nome').val(dados.Nome);
-    $('#txt_login').val(dados.Login);
-    $('#txt_senha').val(dados.Senha);
-    $('#txt_email').val(dados.Email);*/
     $('#txt_cli_nome').prop('readonly', true);
     $('#txt_cpf').prop('readonly', true);
     $('#txt_logradouro').prop('readonly', true);
     $('#txt_numero').prop('readonly', true);
-  
+
 }
 
 function set_focus_form() {
@@ -16,10 +13,10 @@ function set_focus_form() {
 }
 
 function set_dados_grid(dados) {
-    return '<td style="text-align:center;vertical-align:middle">' +
-        '<input type="checkbox" data-id="' + dados.Id + '"></td>' +
-        '<td>' + dados.Nome + '</td>' +
-        '<td>' + dados.Login + '</td>';
+    return '<td>' + dados.Cli_Nome + '</td>' +
+        '<td>' + dados.Dt_Locacao + '</td>' +
+        '<td>' + dados.Qtd_Filmes + '</td>' +
+        '<td>' + dados.Devolvido + '</td>';
 }
 
 function get_dados_inclusao() {
@@ -42,12 +39,9 @@ function get_dados_form() {
     });
 
     return {
-        ClienteId : $('#id_cliente').val(),
-        FilmesId: Filmes_Id,
-        Nome: $('#txt_nome').val(),
-        Login: $('#txt_login').val(),
-        Senha: $('#txt_senha').val(),
-        Email: $('#txt_email').val()
+        Id: $('#id_cadastro').val(),
+        ClienteId: $('#id_cliente').val(),
+        FilmesId: Filmes_Id
     };
 }
 
@@ -89,3 +83,65 @@ function remover_trs() {
 
     return ids;
 }
+
+$(document)
+    .on('click', '.btn-devolver', function () {
+        var btn = $(this),
+            tr = btn.closest('tr'),
+            id = tr.attr('data-id'),
+            url = urlDevolucao,
+            param = { 'id': id };
+        bootbox.confirm({
+            message: "Deseja realmente devolver os filmes?",
+            buttons: {
+                confirm: {
+                    label: 'Sim',
+                    className: 'btn-success'
+                },
+                cancel: {
+                    label: 'Não',
+                    className: 'btn-danger'
+                }
+            },
+            callback: function (result) {
+                if (result) {
+                    $.post(url, add_anti_forgery_token(param), function (response) {
+                        if (response) {
+                            tr.remove();
+                            var quant = $('#grid_cadastro > tbody > tr').length;
+                            if (quant == 0) {
+                                $('#grid_cadastro').addClass('invisivel');
+                                $('#mensagem_grid').removeClass('invisivel');
+                            }
+                        }
+                    })
+                        .fail(function () {
+                            swal('Aviso', 'Não foi possível excluir o registro. Tente novamente em instantes.', 'warning');
+                        });
+                }
+            }
+        });
+    })
+    .on('keyup', '#txt_nome_filme', function () {
+        var filtro = $(this),
+            url = urlFiltro_Filme,
+            param = { 'filtro': filtro.val() };
+
+        $.post(url, add_anti_forgery_token(param), function (response) {
+            if (response) {
+                var table = $('#lista_filmes');
+
+                table.empty();
+                for (var i = 0; i < response.length; i++) {
+                    table.append('<li class="list-group-item">' +
+                        '<label style = "margin-bottom:0" >' +
+                        '<input type="checkbox" data-id-filme=' + response[i].Id + ' data-nome-filme=' + response[i].Nome + '/>' + response[i].Nome +
+                        '</label></li>');
+                    
+                }
+            }
+        })
+            .fail(function () {
+                swal('Aviso', 'Não foi possível filtrar as informações. Tente novamente em instantes.', 'warning');
+            });
+    });

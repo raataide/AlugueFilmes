@@ -222,6 +222,7 @@ $(document)
                 for (var i = 0; i < response.length; i++) {
                     table.append(criar_linha_grid(response[i]));
                 }
+
             }
         })
             .fail(function () {
@@ -330,14 +331,23 @@ function abrir_form(dados) {
 }
 
 function criar_linha_grid(dados) {
-    var ret =
-        '<tr data-id=' + dados.Id + '>' +
-        set_dados_grid(dados) +
-        '<td>' +
-        '<a class="btn btn-primary btn-alterar" role="button" style="margin-right: 3px"><i class="glyphicon glyphicon-pencil"></i> Alterar</a>' +
-        '<a class="btn btn-danger btn-excluir" role="button"><i class="glyphicon glyphicon-trash"></i> Excluir</a>' +
-        '</td>' +
-        '</tr>';
+    if (dados.Cli_Nome != '') {
+        var ret = '<tr data-id=' + dados.Id + '>' +
+            set_dados_grid(dados) +
+            '<td>' +
+            '<a class="btn btn-info btn-devolver" role="button"><i class="glyphicon glyphicon-file"></i> Devolver</a>' +
+            '</td>' +
+            '</tr>';
+    } else {
+        var ret =
+            '<tr data-id=' + dados.Id + '>' +
+            set_dados_grid(dados) +
+            '<td>' +
+            '<a class="btn btn-primary btn-alterar" role="button" style="margin-right: 3px"><i class="glyphicon glyphicon-pencil"></i> Alterar</a>' +
+            '<a class="btn btn-danger btn-excluir" role="button"><i class="glyphicon glyphicon-trash"></i> Excluir</a>' +
+            '</td>' +
+            '</tr>';
+    }
     return ret;
 }
 
