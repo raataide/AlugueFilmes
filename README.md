@@ -4,6 +4,7 @@
   - Clientes;
   - Generos;
   - Filmes;
+    => No cadastro de filmes você poderá escolher 1 ou mais generos.
   - Usuários;
 * No menu de operações, é possível realizar a locação de um filme, escolhendo o cliente e logo em seguida os filmes.
 * Cada locação terá sua opção de devolução. Onde será marcado na coluna "Devolvido" sua situação atual.
