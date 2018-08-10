@@ -291,13 +291,18 @@ $(document)
             var cbx = $(input),
                 marcado = cbx.is(':checked');
             if (marcado) {
-                tbody_filmes.append("<tr><td>"+cbx.attr('data-id-filme')+"</td><td>"+cbx.attr('text')+"</td></tr>");
-                //alert(cbx.attr('data-id-filme'));
-                //ids.push(parseInt(cbx.attr('data-id-filme')));
+                tbody_filmes.append("<tr><td>" + cbx.attr('data-id-filme') + "</td><td>" +
+                    cbx.attr('data-nome-filme') + "</td>" +
+                    "<td><a class=\"btn btn-default btn-remove-filme\" role=\"button\"><i class=\"glyphicon glyphicon-remove\"></i></a></td>" +
+                    "</tr > ");
             }
         });
 
-        
+
+    })
+    .on('click', '.btn-remove-filme', function () {
+        var tr = $(this).closest('tr');
+        tr.remove();
     });
 
 function abrir_form(dados) {
@@ -337,6 +342,7 @@ function criar_linha_grid(dados) {
 }
 
 function preenche_dados_cli(dados) {
+    $('#id_cliente').val(dados.Id);
     $('#txt_cli_nome').val(dados.Nome);
     $('#txt_cpf').val(dados.NumDocumento);
     $('#txt_logradouro').val(dados.Logradouro);

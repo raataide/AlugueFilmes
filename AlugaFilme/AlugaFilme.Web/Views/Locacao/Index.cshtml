@@ -58,6 +58,7 @@
 }
 
 @section CamposCadastro{
+    @Html.Hidden("id_cliente")
     <div class="row" style="margin-top: 10px">
         <div class="col-md-12">
             <div class="panel panel-info">
@@ -113,7 +114,7 @@
                             {
                                 <li class="list-group-item">
                                     <label style="margin-bottom:0">
-                                        <input type="checkbox" data-id-filme="@filmes.Id" /> @filmes.Nome
+                                        <input type="checkbox" data-id-filme="@filmes.Id" data-nome-filme="@filmes.Nome" /> @filmes.Nome
                                     </label>
 
                                 </li>
@@ -126,15 +127,10 @@
                             <tr>
                                 <th>Cód. Filme</th>
                                 <th>Nome filme</th>
+                                <th style="width:20px"></th>
                             </tr>
                         </thead>
-
-                        <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>asdasdasd</td>
-                            </tr>
-                        </tbody>
+                        <tbody></tbody>
                     </table>
                 </div>
             </div>
@@ -147,12 +143,12 @@
     <script>
 
         var urlRecuperarCliente = '@Url.Action("RecuperarClientes", "Locacao")';
+        var urlConfirmacao = '@Url.Action("SalvaLocacao", "Locacao")';
 
         var tituloPagina = '@ViewBag.Title';
         var urlAlteracao = '@Url.Action("RecuperarUsuario", "Locacao")';
         var urlExclusao = '@Url.Action("ExcluirUsuario", "Locacao")';
         var urlExclusaoVarios = '@Url.Action("ExcluirVariosUsuarios", "Locacao")';
-        var urlConfirmacao = '@Url.Action("SalvarUsuario", "Locacao")';
 
         var urlChangePage = '@Url.Action("UsuarioPagina", "Locacao")';
         var urlFiltro = '@Url.Action("UsuarioPagina", "Locacao")';

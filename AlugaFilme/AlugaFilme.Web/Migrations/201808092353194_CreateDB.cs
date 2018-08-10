@@ -3,7 +3,7 @@ namespace AlugaFilme.Web.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class CreateBD : DbMigration
+    public partial class CreateDB : DbMigration
     {
         public override void Up()
         {
@@ -55,6 +55,7 @@ namespace AlugaFilme.Web.Migrations
                         Id = c.Int(nullable: false, identity: true),
                         DtLocacao = c.DateTime(nullable: false),
                         Cpf_Cliente = c.String(nullable: false),
+                        Id_Cliente = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.Id);
             

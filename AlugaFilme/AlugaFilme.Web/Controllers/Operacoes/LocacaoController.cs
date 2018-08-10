@@ -48,6 +48,25 @@ namespace AlugaFilme.Web.Controllers
             return Json(lista);
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult SalvaLocacao(string tipo, string filtro)
+        {
+            var filtro_str = "";
+            if (tipo == "CPF")
+            {
+                filtro_str = formata_cpf(filtro);
+            }
+            else
+            {
+                filtro_str = filtro.ToLower();
+            }
+
+            var cliente = db.Clientes.Where(p => (tipo == "CPF" ? p.NumDocumento : p.Nome).ToLower().Contains(filtro_str));
+            var lista = cliente.ToList();
+            return Json(lista);
+        }
+
         public string formata_cpf(string texto)
         {
             return Convert.ToUInt64(texto).ToString(@"000\.000\.000\-00");

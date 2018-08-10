@@ -1,6 +1,6 @@
 ﻿function set_dados_form(dados) {
-    /*    $('#id_cadastro').val(dados.Id);
-    $('#txt_nome').val(dados.Nome);
+    $('#id_cliente').val(dados.Id_Cliente);
+    /*$('#txt_nome').val(dados.Nome);
     $('#txt_login').val(dados.Login);
     $('#txt_senha').val(dados.Senha);
     $('#txt_email').val(dados.Email);*/
@@ -12,7 +12,7 @@
 }
 
 function set_focus_form() {
-    $('#txt_nome').focus();
+    $('#txt_filtro_cli').focus();
 }
 
 function set_dados_grid(dados) {
@@ -33,8 +33,17 @@ function get_dados_inclusao() {
 }
 
 function get_dados_form() {
+    var Filmes_Id = [],
+        lista_filmes = $('#grid_filmes');
+
+    lista_filmes.find(' tr:nth-child(n) td:nth-child(1)').each(function (index, td) {
+        var td = $(td).text();
+        Filmes_Id.push(td);
+    });
+
     return {
-        Id: $('#id_cadastro').val(),
+        ClienteId : $('#id_cliente').val(),
+        FilmesId: Filmes_Id,
         Nome: $('#txt_nome').val(),
         Login: $('#txt_login').val(),
         Senha: $('#txt_senha').val(),

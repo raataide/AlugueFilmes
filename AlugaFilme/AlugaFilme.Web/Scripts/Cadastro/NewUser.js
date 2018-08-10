@@ -52,7 +52,7 @@ function add_anti_forgery_token(data) {
 }
 
 $(document)
-    .on('click', '#Incluir_User', function () {
+    .on('click', '#Incluir_User', function () {        
         abrir_form(get_dados_inclusao());
     })
     .on('click', '#btn_salvar', function () {
@@ -62,7 +62,7 @@ $(document)
         $.post(url, add_anti_forgery_token(param), function (response) {
             if (response.Resultado == "OK") {
 
-                swal('Confirmação', 'Usuário salvo com sucesso.', 'sucess');
+                swal('Confirmação', 'Usuário salvo com sucesso.', 'success');
                 $('#modal_cadastro').parents('.bootbox').modal('hide');
             }
         })

@@ -18,6 +18,8 @@ namespace AlugaFilme.Web.Models
 
         [Required]
         public string Cpf_Cliente { get; set; }
+        [Required]
+        public int Id_Cliente { get; set; }
 
         public List<FilmesModel> Filmes { get; set; }
         public LocacaoModel()

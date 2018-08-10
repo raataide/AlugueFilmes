@@ -9,6 +9,7 @@ using Dapper;
 using System.Linq;
 using System.Web;
 using AlugaFilme.Web.Models;
+using System.ComponentModel.DataAnnotations.Schema;
 
 //namespace AlugaFilme.Web.Views.Domain
 namespace AlugaFilme.Web.Models.Domain
@@ -18,6 +19,7 @@ namespace AlugaFilme.Web.Models.Domain
         public int Id { get; set; }
 
         [Required(ErrorMessage = "Informe o login.")]
+        [Index(IsUnique = true)]
         public string Login { get; set; }
 
         [Required(ErrorMessage = "Informe o nome do usuário.")]
