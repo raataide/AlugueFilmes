@@ -39,7 +39,7 @@ function set_dados_grid(dados) {
         '<input type="checkbox" data-id="' + dados.Id + '"></td>' +
         '<td>' + dados.Nome + '</td>' +
         '<td>' + dados.Telefone + '</td>' +
-        '<td>' + dados.Ativo + '</td>';
+        '<td>' + (dados.Ativo ? 'SIM' : 'NÃO') + '</td>';
 }
 
 function get_dados_form() {

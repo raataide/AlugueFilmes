@@ -201,6 +201,8 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Properties\PublishProfiles\AlugaFilmeWeb - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\AlugueFilmes - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\Cadastro\CadBase.js" />
     <Content Include="Scripts\Cadastro\Clientes.js" />

@@ -331,7 +331,7 @@ function abrir_form(dados) {
 }
 
 function criar_linha_grid(dados) {
-    if (dados.Cli_Nome != '') {
+    if (dados.Cli_Nome != null) {
         var ret = '<tr data-id=' + dados.Id + '>' +
             set_dados_grid(dados) +
             '<td>' +
